@@ -1,21 +1,3 @@
-#
-# This server is a simple file server for one file (the keepass password
-# database).
-#
-# There are callbacks for backing up the database before overwriting and for
-# synchronization with external location (like rclone-mounted google drive
-# location)
-#
-# Keepass 2.59 windows client saves the database over HTTPS like this:
-#
-# "GET    /passwords-personal.kdbx HTTP/1.1" 200 -
-# "PUT    /passwords-personal.kdbx.tmp HTTP/1.1" 200 -
-# "GET    /passwords-personal.kdbx HTTP/1.1" 200 -
-# "DELETE /passwords-personal.kdbx HTTP/1.1" 200 -
-# "MOVE   /passwords-personal.kdbx.tmp HTTP/1.1" 200 -
-# "GET    /passwords-personal.kdbx HTTP/1.1" 200 -
-#
-
 import backup
 import sync
 from flask import Flask
