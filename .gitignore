@@ -1,3 +1,5 @@
 __pycache__
 passwords-personal.kdbx
 passwords-personal.kdbx.tmp
+backup
+mock-external-location.kdbx
