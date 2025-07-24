@@ -14,7 +14,9 @@ Keepass 2.59 windows client saves the database over HTTP(S) like this:
 ```
 
 > [!NOTE]
-> The `MOVE` method is somewhat uncommon. Keepass includes a `Location` header with that specifies the destionation to move to (URI is the source)
+> The `MOVE` method is part of WebDAV (HTTP extension for file
+> management). It includes a `Location` header with that specifies the
+> destionation to move to.
 
 This server is made to fulfill these requests made by a Keepass client but nothing more.
 
