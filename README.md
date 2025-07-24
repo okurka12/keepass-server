@@ -33,9 +33,9 @@ location)
 - Configure reverse proxy with nginx or a web server of your choice.
 
 > [!CAUTION]
-> Caution! When exposing this server to the internet, make sure to
-> protect the access with HTTP Auth (nginx `auth_basic` directive) and TLS
-> (certbot)!
+> When exposing this server to the internet, make sure to setup a
+> reverse proxy to protect the access with HTTP Auth (nginx `auth_basic`
+> directive) and TLS (certbot)!
 
 ## When is this useful?
 
