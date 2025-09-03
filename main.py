@@ -12,7 +12,7 @@ TMP_FILENAME = f"{FILENAME}.tmp"
 FILENAME_URI = f"/{FILENAME}"
 TMP_FILENAME_URI = f"/{TMP_FILENAME}"
 
-@app.route(FILENAME_URI, methods=["GET", "DELETE"])
+@app.route(FILENAME_URI, methods=["GET", "DELETE", "PUT"])
 def read_write_file():
 
     if flask.request.method == "GET":
@@ -28,12 +28,19 @@ def read_write_file():
         os.remove(FILENAME)
         return "ok"
 
+    elif flask.request.method == "PUT":
+
+        backup.make_backup()
+        with open(TMP_FILENAME, "bw") as f:
+            f.write(flask.request.data)
+        return "ok"
+
 @app.route(TMP_FILENAME_URI, methods=["PUT", "MOVE"])
 def read_write_temporary():
 
     if flask.request.method == "PUT":
 
-        with open(f"{FILENAME}.tmp", "bw") as f:
+        with open(TMP_FILENAME, "bw") as f:
             f.write(flask.request.data)
 
         return "ok"
