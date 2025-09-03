@@ -1,1 +1,1 @@
-python3.12 -m gunicorn -c gunicorn-config.py wsgi:app
+python3.13 -m gunicorn -c gunicorn-config.py wsgi:app
