@@ -13,6 +13,15 @@ Keepass 2.59 windows client saves the database over HTTP(S) like this:
 "GET    /passwords-personal.kdbx HTTP/1.1" 200 -
 ```
 
+On the other hand, Keepass2Android 1.12-r5 only does:
+```
+"GET    /passwords-personal.kdbx HTTP/1.1" 200 -
+"GET    /passwords-personal.kdbx HTTP/1.1" 200 -
+"PUT    /passwords-personal.kdbx HTTP/1.1" 200 -
+```
+
+This server works for both **Keepass windows client** and **Keepass2Android**.
+
 > [!NOTE]
 > The `MOVE` method is part of WebDAV (HTTP extension for file
 > management). It includes a `Location` header that specifies the

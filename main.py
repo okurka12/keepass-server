@@ -28,6 +28,7 @@ def read_write_file():
         os.remove(FILENAME)
         return "ok"
 
+    # only for keepass2android
     elif flask.request.method == "PUT":
 
         backup.make_backup()
