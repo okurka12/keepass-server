@@ -32,8 +32,13 @@ def read_write_file():
     elif flask.request.method == "PUT":
 
         backup.make_backup()
+
         with open(FILENAME, "bw") as f:
             f.write(flask.request.data)
+
+        if conf.ENABLE_SYNC:
+            sync.push_changes()
+
         return "ok"
 
 @app.route(TMP_FILENAME_URI, methods=["PUT", "MOVE"])
