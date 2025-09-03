@@ -32,7 +32,7 @@ def read_write_file():
     elif flask.request.method == "PUT":
 
         backup.make_backup()
-        with open(TMP_FILENAME, "bw") as f:
+        with open(FILENAME, "bw") as f:
             f.write(flask.request.data)
         return "ok"
 
