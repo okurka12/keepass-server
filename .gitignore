@@ -3,3 +3,4 @@ passwords-personal.kdbx
 passwords-personal.kdbx.tmp
 backup
 mock-external-location.kdbx
+kpserver.service

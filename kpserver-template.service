@@ -1,0 +1,16 @@
+# SYSTEMD.UNIT(5)
+# tldr: put for example into /usr/local/lib/systemd/system/
+
+[Unit]
+Description=KeePass WebDAV server (https://github.com/okurka12/keepass-server)
+After=network.target
+
+[Service]
+Type=simple
+User=xxx
+WorkingDirectory=xxx
+ExecStart=/bin/bash -c './start.sh'
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
