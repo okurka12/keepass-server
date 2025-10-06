@@ -12,7 +12,36 @@ TMP_FILENAME = f"{FILENAME}.tmp"
 FILENAME_URI = f"/{FILENAME}"
 TMP_FILENAME_URI = f"/{TMP_FILENAME}"
 
-@app.route(FILENAME_URI, methods=["GET", "DELETE", "PUT"])
+# for keepass2android 1.14-r1
+@app.route(f"{TMP_FILENAME_URI}.<number>", methods=["PUT", "MOVE"])
+def write_chunk(number):
+
+    filename = f"{TMP_FILENAME}.{number}"
+
+    if flask.request.method == "PUT":
+        with open(filename, "bw") as f:
+            f.write(flask.request.data)
+        return "ok"
+
+    elif flask.request.method == "MOVE":
+        dst = flask.request.headers.get("Destination", "x").split("/")[-1]
+        if dst != FILENAME:
+            return "unexpected destination header", 403
+
+        if flask.request.headers.get("Overwrite", "F") != "T":
+            return "overwrite header is not t", 403
+
+        backup.make_backup()
+        os.remove(FILENAME)
+        shutil.move(filename, FILENAME)  # x.kdbx.tmp.123 -> x.kdbx
+
+        if conf.ENABLE_SYNC:
+            sync.push_changes()
+
+        return "ok"
+
+
+@app.route(FILENAME_URI, methods=["GET", "DELETE"])
 def read_write_file():
 
     if flask.request.method == "GET":
@@ -28,18 +57,6 @@ def read_write_file():
         os.remove(FILENAME)
         return "ok"
 
-    # only for keepass2android
-    elif flask.request.method == "PUT":
-
-        backup.make_backup()
-
-        with open(FILENAME, "bw") as f:
-            f.write(flask.request.data)
-
-        if conf.ENABLE_SYNC:
-            sync.push_changes()
-
-        return "ok"
 
 @app.route(TMP_FILENAME_URI, methods=["PUT", "MOVE"])
 def read_write_temporary():
